@@ -1,0 +1,8 @@
+.container{
+  margin: 15px;
+  border: 1px solid;
+  border-radius: 5px;
+  width: 50%;
+  min-width: 300px;
+  text-align: center;
+}
