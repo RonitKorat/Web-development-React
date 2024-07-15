@@ -9,17 +9,18 @@ export const PostList = createContext({
 });
 
 // Reducer function for managing post list state
-const postListReducer = (state, action) => {
-  switch (action.type) {
-    case "DELETE_POST":
-      return state.filter((post) => post.id !== action.payload.postId);
-    case "ADD_INITIAL_POSTS":
-      return action.payload.posts;
-    case "ADD_POST":
-      return [action.payload, ...state];
-    default:
-      return state;
+const postListReducer = (currPostList, action) => {
+  let newPostList = currPostList;
+  if (action.type === "DELETE_POST") {
+    newPostList = currPostList.filter(
+      (post) => post.id !== action.payload.postId
+    );
+  } else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts;
+  } else if (action.type === "ADD_POST") {
+    newPostList = [action.payload, ...currPostList];
   }
+  return newPostList;
 };
 
 // Provider component to manage and provide post list state
@@ -71,7 +72,7 @@ const PostListProvider = ({ children }) => {
       controller.abort();
     };
   }, [addInitialPosts]);
-
+  
   return (
     <PostList.Provider value={{ postList, addPost, deletePost, fetching }}>
       {children}
