@@ -2,53 +2,35 @@ import { useContext, useRef } from "react";
 import { PostList } from "../store/post-list-store";
 
 const CreatePost = () => {
-  const { addPost } = useContext(PostList);
 
-  const userIdElement = useRef();
-  const postTitleElement = useRef();
-  const postBodyElement = useRef();
-  const reactionsElement = useRef();
-  const tagsElement = useRef();
+  const {addPost} =useContext(PostList);
 
-  const handleSubmit = (event) => {
+  const userIdElement=useRef();
+  const postTitleElement=useRef();
+  const postBodyElement=useRef();
+  const reactionsElement=useRef();
+  const tagsElement=useRef();
+
+  const handleSubmit = (event) =>{
     event.preventDefault();
     const userId = userIdElement.current.value;
     const postTitle = postTitleElement.current.value;
     const postBody = postBodyElement.current.value;
     const reactions = reactionsElement.current.value;
-    const tags = tagsElement.current.value.split(" ");
+    const tags = tagsElement.current.value.split(' ');
 
-    // Clear input fields
-    userIdElement.current.value = "";
-    postTitleElement.current.value = "";
-    postBodyElement.current.value = "";
-    reactionsElement.current.value = "";
-    tagsElement.current.value = "";
+    userIdElement.current.value="";
+    postTitleElement.current.value="";
+    postBodyElement.current.value="";
+    reactionsElement.current.value="";
+    tagsElement.current.value="";
 
-    fetch("https://dummyjson.com/posts/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: postTitle,
-        body: postBody,
-        userId: userId,
-        reactions: reactions,
-        tags: tags,
-      }),
-    })
-      .then((res) => res.json())
-      .then((post) => {
-        addPost(post);
-      })
-      .catch((error) => {
-        console.error("Error adding post:", error);
-      });
-  };
-
+    addPost(userId,postTitle,postBody,reactions,tags);
+  }
   return (
     <form className="create-post" onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="userid" className="form-label">
+        <label htmlFor="id" className="form-label">
           Enter Your User ID here
         </label>
         <input
@@ -76,6 +58,7 @@ const CreatePost = () => {
           Post Content
         </label>
         <textarea
+          type="text"
           className="form-control"
           id="body"
           ref={postBodyElement}
@@ -97,14 +80,14 @@ const CreatePost = () => {
       </div>
       <div className="mb-3">
         <label htmlFor="tags" className="form-label">
-          Enter your hashtags here
+          Enter your hastags here
         </label>
         <input
           type="text"
           className="form-control"
           id="tags"
           ref={tagsElement}
-          placeholder="Please enter your tags using space"
+          placeholder="Please Enter your tags using space"
         />
       </div>
       <button type="submit" className="btn btn-primary">
@@ -113,5 +96,4 @@ const CreatePost = () => {
     </form>
   );
 };
-
 export default CreatePost;
