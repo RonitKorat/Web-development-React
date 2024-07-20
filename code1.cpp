@@ -13,34 +13,37 @@
 using namespace std;
 void solve()
 {
-    int n,m,k;
-    cin>>n>>m>>k;
-    string a;
-    int c=0,d=0,ind=m-1;
-    cin>>a;
-    for(int i=0;i<n;i++)
+    int n,m;
+    cin>>n>>m;
+    string s;
+    cin>>s;
+    int a[m];
+    for(int i=0;i<m;i++)
     {
-        if(a[i]=='L')
+        cin>>a[i];
+    }
+    string c;
+    cin>>c;
+    sort(all(c));
+    sort(a,a+m);
+    vector<int> v;
+    for(int i=0;i<m-1;i++)
+    {
+        if(a[i]==a[i+1])
         {
-           ind=m;
+            continue;
         }
-        else if(a[i]=='W' && ind<=0)
+        else
         {
-            c++;
-        }
-        else if(a[i]=='C' && ind<=0)
-        {
-            no;
-            return;
-        }
-        ind--;
-        if(c>k)
-        {
-            no;
-            return;
+            v.push_back(a[i]);
         }
     }
-    yes;
+    v.push_back(a[m-1]);
+    for(int i=0;i<v.size();i++)
+    {
+        s[v[i]-1]=c[i];
+    }
+    cout<<s<<endl;
 
 }
 signed main()
